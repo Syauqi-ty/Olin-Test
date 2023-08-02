@@ -1,23 +1,27 @@
+def REGISTRY = 'https://index.docker.io/v1/'
+def GIT_REPO = 'https://github.com/Syauqi-ty/Olin-Test.git'
+def AWS_UBUNTU = '18.143.199.171'
+def SSH_ID = 'SSH-AWS'
 pipeline {
     agent any
 
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-github-account/your-repo.git'
+                git "${GIT_REPO}"
             }
         }
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("my-php-app", "-f Dockerfile .")
+                    dockerImage = docker.build("syauqittuqa/olin-php:latest", "-f Dockerfile .")
                 }
             }
         }
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry('https://your-registry.com', 'your-credentials-id') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'Syauqi-Docker') {
                         dockerImage.push("latest")
                     }
                 }
@@ -26,9 +30,9 @@ pipeline {
         stage('Deploy Docker Image') {
             steps {
                 script {
-                    sshagent(['your-credentials-id']) {
+                    sshagent(['SSH-AWS']) {
                         sh """
-                            ssh your-user@your-server 'docker pull your-registry.com/my-php-app:latest && docker run -d -p 443:443 --name my-running-app your-registry.com/my-php-app:latest'
+                            ssh -l ubuntu 13.229.0.153 -o StrictHostKeyChecking=no 'docker pull syauqittuqa/olin-php:latest && docker run -d -p 80:80 syauqittuqa/olin-php:latest'
                         """
                     }
                 }

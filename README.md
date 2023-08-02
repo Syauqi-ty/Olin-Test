@@ -1,28 +1,28 @@
-# Simple Web Application
-This assignment aims to enhance my understanding of Web client-side programming techniques using JavaScript and Web server-side programming techniques using PHP
+# Olin-Test
 
-## Sample Front End User Interface
-![Front-End UI](img/github.png?raw=true "front-end")
+This assignment used for recruitment process at OLIN - All-in-one Pharmacy Management System
 
-Folder Structure Conventions
-============================
+## N-tier Interface
 
-> Folder structure options and naming conventions for project
+![N-Tier Architecture](N-tier.png "n-tier")
 
-### CZ3006_Assignment_2
+Teknologi yang digunakan dalam pendesainan arsitektur untuk N-tier architecture beserta alasannya adalah sebagai berikut:
 
-    .
-    ├── img/           # Contains all relevant images used in the application
-    ├── README.md      # README for repository
-    ├── index.html     # HTML document for project(includes both css and javascript codes as the instruction was to create a HTML document)
-    ├── orders.txt     # Orders form to keep track of total orders
-    └── receipt.php    # PHP script and logics
+1. Cloudflare: Digunakan untuk domain yang ada agar dapat digunakan SSL sekaligus bergua sebagai proxy.
+2. Cloud Armor: Digunakan sebagai security dari cloud agar tidak ada serangan DDoS seperti SQL Injection dan lain lain.
+3. Load Balancer: Digunakan untuk menghandle request yang banyak, tujuannya adalah agar traffic yang ada dalam kasus ini adalah 100.000 user tidak berlebih langsung ke satu server tapi beban tersebut dibagi lagi.
+4. Presentation Layer: Merupakan sebuah layer untuk bagian frontend.
+5. Auto Scaller: Digunakan untuk meng scale sebuah server sesuai dengan workload yang ada. Jika workload sudah berlebih dan kapasitas server sudah penuh maka server akan secra aotomatis melakukan scalling resource secara horizontal.
+6. Logic Layer: Digunakan untuk layer yang merupakan backend atau adanya proses cloud computing.
+7. Data Layer: Digunakan sebagai Layer Database untuk menyimpan data user dan data lainnya seperti gambar.
+8. Monitoring Layer: Digunakan untuk memonitor server yang ada bagaimana traffic dan juga kesehatan dari servernya.
+9. Spesifikasi VM: 4 Core 16 GB dikarenakan terdapat GKE di dalamnya. Hal tersebut cukup dikarenakan sudah terdapat juga autoscaller di dalamnya.
 
-****
+## Aplikasi yang dideploy
 
-***Disclaimer:*** This repo is deprecated and no longer maintained. The Project was submitted as part of the course project for CZ3006 Net Centric Computing at NTU in AY 17/18 Semester 1. All rights reserved to Nanyang Technological University and the Designer of course CZ3006. The author will bear no responsibilities for any issues arose from academic integrity or honor code violations of anyone who takes this repository as a reference.
+1. Untuk mengakses aplikasi yang sudah dideploy dapat mengunjungi [Link](https://olin-test.syauqi-lab.my.id) berikut.
+2. Untuk Melihat pipeline jenkins dari aplikasi yang dibuat dapat mengunjungi [Link](http://jenkins.syauqi-lab.my.id:8080) berikut.
 
+## Notes
 
-### How To Run This FruitPay
-
-
+Untuk file provider.tf access key dan secret key dari AWS saya hilangkan karena mendapat alert dari Git dan juga AWS Terima Kasih
